@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 
 const registerSchema = z.object({
@@ -24,11 +24,15 @@ export const RegisterForm = () => {
   const navigate = useNavigate();
   const setTokens = useAuthStore((state) => state.setTokens);
   const setUser = useAuthStore((state) => state.setUser);
-  
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
   });
 
@@ -42,47 +46,121 @@ export const RegisterForm = () => {
         if (res.data.user) setUser(res.data.user);
         navigate(RouteConstant.DASHBOARD);
       }
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Registration failed');
+    } catch (err: unknown) {
+      const errorMsg =
+        err instanceof Error
+          ? (err as { response?: { data?: { message?: string } } }).response
+              ?.data?.message || err.message
+          : 'Registration failed';
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto shadow-lg border-primary/20">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-3xl font-bold tracking-tight text-center">Create an account</CardTitle>
-        <CardDescription className="text-center">Enter your details to create your CatatUang account</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" placeholder="John Doe" {...register('name')} />
-            {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
+    <Card className="w-full max-w-md mx-auto shadow-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 rounded-lg overflow-hidden">
+      <div className="px-8 pt-8 pb-6 border-b border-slate-50 dark:border-slate-900">
+        <h1 className="text-2xl font-black tracking-tight text-center text-slate-900 dark:text-white uppercase italic">
+          CatatUang
+        </h1>
+        <p className="text-[10px] font-black uppercase text-center text-slate-400 tracking-[0.2em] mt-2">
+          New Account Registration
+        </p>
+      </div>
+
+      <CardContent className="p-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div className="space-y-2 text-left">
+            <Label
+              htmlFor="name"
+              className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1"
+            >
+              Full Name
+            </Label>
+            <Input
+              id="name"
+              placeholder="Your Name"
+              className="h-10 rounded-md bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 transition-colors focus:border-primary"
+              {...register('name')}
+            />
+            {errors.name && (
+              <p className="text-[10px] text-red-500 font-bold uppercase mt-1 ml-1">
+                {errors.name.message}
+              </p>
+            )}
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="m@example.com" {...register('email')} />
-            {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
+
+          <div className="space-y-2 text-left">
+            <Label
+              htmlFor="email"
+              className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1"
+            >
+              Email Address
+            </Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="name@company.com"
+              className="h-10 rounded-md bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 transition-colors focus:border-primary"
+              {...register('email')}
+            />
+            {errors.email && (
+              <p className="text-[10px] text-red-500 font-bold uppercase mt-1 ml-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" {...register('password')} />
-            {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
+
+          <div className="space-y-2 text-left">
+            <Label
+              htmlFor="password"
+              className="text-xs font-bold uppercase tracking-wider text-slate-500 ml-1"
+            >
+              Secret Password
+            </Label>
+            <Input
+              id="password"
+              type="password"
+              className="h-10 rounded-md bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 transition-colors focus:border-primary"
+              {...register('password')}
+            />
+            {errors.password && (
+              <p className="text-[10px] text-red-500 font-bold uppercase mt-1 ml-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
-          {error && <p className="text-sm text-red-500 font-medium">{error}</p>}
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Creating account...' : 'Create account'}
+
+          {error && (
+            <div className="p-3 rounded-md bg-red-50 border border-red-100 dark:bg-red-950/20 dark:border-red-900/50">
+              <p className="text-[10px] text-red-600 dark:text-red-400 font-bold uppercase text-center">
+                {error}
+              </p>
+            </div>
+          )}
+
+          <Button
+            type="submit"
+            className="w-full h-11 bg-primary text-white font-black uppercase tracking-widest text-xs rounded-md shadow-sm shadow-primary/20"
+            disabled={loading}
+          >
+            {loading ? 'Creating account...' : 'Create Account'}
           </Button>
         </form>
-      </CardContent>
-      <CardFooter className="flex flex-col space-y-4">
-        <div className="text-center text-sm mt-2">
-          Already have an account? <Link to={RouteConstant.LOGIN} className="underline text-primary hover:text-primary/80">Login</Link>
+
+        <div className="mt-8 text-center pt-6 border-t border-slate-50 dark:border-slate-900">
+          <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+            Already have an account?{' '}
+            <Link
+              to={RouteConstant.LOGIN}
+              className="text-primary hover:underline ml-1"
+            >
+              Login Here
+            </Link>
+          </p>
         </div>
-      </CardFooter>
+      </CardContent>
     </Card>
   );
 };
