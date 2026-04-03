@@ -44,7 +44,7 @@ export const DashboardSummary: React.FC = () => {
     : 0;
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4 w-full min-w-0">
       <StatCard
         title="Total Balance"
         value={formatCurrency(data?.balance || 0)}

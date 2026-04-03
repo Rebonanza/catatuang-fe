@@ -48,7 +48,7 @@ export const StatCard: React.FC<StatCardProps> = ({
         </div>
 
         <div className="space-y-0.5 sm:space-y-1">
-          <div className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white truncate">
+          <div className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white break-all leading-tight">
             {value}
           </div>
 

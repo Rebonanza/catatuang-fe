@@ -45,8 +45,8 @@ export const DashboardPage = () => {
 
         <DashboardSummary />
 
-        <div className="grid gap-6 lg:gap-8 lg:grid-cols-3">
-          <div className="lg:col-span-2 space-y-8">
+        <div className="grid gap-4 sm:gap-6 lg:gap-8 lg:grid-cols-3 w-full">
+          <div className="lg:col-span-2 space-y-6 sm:space-y-8 min-w-0">
             <ExpenseChart />
 
             <section className="bg-white dark:bg-slate-950 rounded-lg border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
@@ -95,7 +95,7 @@ export const DashboardPage = () => {
                           <Receipt className="w-5 h-5" />
                         </div>
                         <div className="min-w-0 flex-1 px-1">
-                          <p className="font-bold text-slate-900 dark:text-white truncate">
+                          <p className="font-bold text-slate-900 dark:text-white leading-tight break-words">
                             {tx.merchant || 'Uncategorized'}
                           </p>
                           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5">

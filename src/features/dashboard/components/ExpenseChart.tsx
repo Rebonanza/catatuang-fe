@@ -13,10 +13,15 @@ import {
 import { PieChart } from 'lucide-react';
 
 export const ExpenseChart: React.FC = () => {
+  const [isMounted, setIsMounted] = React.useState(false);
   const { data, isLoading } = useQuery({
     queryKey: ['categorySummary'],
     queryFn: () => getCategorySummary(),
   });
+
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   if (isLoading) {
     return (
@@ -63,50 +68,52 @@ export const ExpenseChart: React.FC = () => {
           <PieChart className="w-4 h-4 text-primary" />
         </div>
       </div>
-      <CardContent className="h-72 p-6">
+      <CardContent className="h-72 p-1 sm:p-6 overflow-hidden">
         <div className="w-full h-full min-w-0">
-          <ResponsiveContainer width="100%" height="100%">
-            <RechartsPieChart>
-              <Pie
-                data={data}
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={85}
-                paddingAngle={4}
-                strokeWidth={0}
-                dataKey="value"
-              >
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip
-                formatter={(value: unknown) => formatCurrency(Number(value))}
-                contentStyle={{
-                  borderRadius: '8px',
-                  border: '1px solid #e2e8f0',
-                  fontSize: '11px',
-                  fontWeight: '800',
-                  padding: '8px 12px',
-                  boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
-                  textTransform: 'uppercase',
-                }}
-              />
-              <Legend
-                verticalAlign="bottom"
-                height={36}
-                iconType="circle"
-                wrapperStyle={{
-                  paddingTop: '20px',
-                  fontSize: '10px',
-                  fontWeight: '900',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
-                }}
-              />
-            </RechartsPieChart>
-          </ResponsiveContainer>
+          {isMounted && (
+            <ResponsiveContainer width="100%" height="100%">
+              <RechartsPieChart>
+                <Pie
+                  data={data}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={85}
+                  paddingAngle={4}
+                  strokeWidth={0}
+                  dataKey="value"
+                >
+                  {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  formatter={(value: unknown) => formatCurrency(Number(value))}
+                  contentStyle={{
+                    borderRadius: '8px',
+                    border: '1px solid #e2e8f0',
+                    fontSize: '11px',
+                    fontWeight: '800',
+                    padding: '8px 12px',
+                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                    textTransform: 'uppercase',
+                  }}
+                />
+                <Legend
+                  verticalAlign="bottom"
+                  height={36}
+                  iconType="circle"
+                  wrapperStyle={{
+                    paddingTop: '20px',
+                    fontSize: '10px',
+                    fontWeight: '900',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                  }}
+                />
+              </RechartsPieChart>
+            </ResponsiveContainer>
+          )}
         </div>
       </CardContent>
     </Card>
