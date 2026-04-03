@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
+import { InstallAppButton } from '@/components/InstallAppButton';
 
 const registerSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -60,13 +61,14 @@ export const RegisterForm = () => {
 
   return (
     <Card className="w-full max-w-md mx-auto shadow-sm border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 rounded-lg overflow-hidden">
-      <div className="px-8 pt-8 pb-6 border-b border-slate-50 dark:border-slate-900">
+      <div className="px-8 pt-8 pb-6 border-b border-slate-50 dark:border-slate-900 flex flex-col items-center">
         <h1 className="text-2xl font-black tracking-tight text-center text-slate-900 dark:text-white uppercase italic">
           CatatUang
         </h1>
-        <p className="text-[10px] font-black uppercase text-center text-slate-400 tracking-[0.2em] mt-2">
+        <p className="text-[10px] font-black uppercase text-center text-slate-400 tracking-[0.2em] mt-2 mb-4">
           New Account Registration
         </p>
+        <InstallAppButton />
       </div>
 
       <CardContent className="p-8">

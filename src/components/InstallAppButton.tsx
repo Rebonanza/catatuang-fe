@@ -17,7 +17,7 @@ interface ExtendedNavigator extends Navigator {
   standalone?: boolean;
 }
 
-export const InstallAppButton = () => {
+export const InstallAppButton = ({ className }: { className?: string }) => {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [isIos, setIsIos] = useState(false);
@@ -88,6 +88,7 @@ export const InstallAppButton = () => {
         size="sm"
         className={cn(
           'flex h-8 items-center gap-2 border-primary/20 bg-primary/10 text-[10px] font-black uppercase tracking-widest text-primary transition-all hover:bg-primary/20',
+          className,
         )}
       >
         <Download className="w-3.5 h-3.5" />
