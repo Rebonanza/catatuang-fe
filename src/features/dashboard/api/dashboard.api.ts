@@ -1,11 +1,19 @@
 import { apiClient } from '@/config/axios.config';
 
+export interface Trend {
+  value: number;
+  isPositive: boolean;
+}
+
 export interface DashboardSummary {
   month: number;
   year: number;
   income: number;
+  incomeTrend: Trend;
   expense: number;
+  expenseTrend: Trend;
   balance: number;
+  balanceTrend: Trend;
 }
 
 export const getDashboardSummary = async (

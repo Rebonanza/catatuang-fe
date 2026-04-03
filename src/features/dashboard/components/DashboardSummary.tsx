@@ -49,20 +49,20 @@ export const DashboardSummary: React.FC = () => {
         title="Total Balance"
         value={formatCurrency(data?.balance || 0)}
         icon={Wallet}
-        trend={{ value: 12, isPositive: true }}
+        trend={data?.balanceTrend}
       />
       <StatCard
         title="Monthly Income"
         value={formatCurrency(data?.income || 0)}
         icon={TrendingUp}
-        trend={{ value: 8, isPositive: true }}
+        trend={data?.incomeTrend}
         iconClassName="text-primary"
       />
       <StatCard
         title="Monthly Expenses"
         value={formatCurrency(data?.expense || 0)}
         icon={TrendingDown}
-        trend={{ value: 5, isPositive: false }}
+        trend={data?.expenseTrend}
         iconClassName="text-red-500"
       />
       <StatCard

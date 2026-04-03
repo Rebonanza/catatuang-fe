@@ -181,9 +181,6 @@ export const GmailConnectionCard: React.FC = () => {
                 </Button>
               </div>
             </div>
-            <p className="text-[10px] font-medium text-slate-500 text-center uppercase tracking-widest italic opacity-80">
-              Auto-sync: BCA, GoPay, OVO, ShopeePay
-            </p>
           </div>
         ) : (
           <div className="text-center py-2 space-y-4">
