@@ -4,14 +4,7 @@ import { RouteConstant } from '@/constants/routes.constant';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { InstallAppButton } from '../InstallAppButton';
-import {
-  Wallet,
-  LayoutDashboard,
-  Receipt,
-  Tag,
-  LogOut,
-  User,
-} from 'lucide-react';
+import { LayoutDashboard, Receipt, Tag, LogOut, User } from 'lucide-react';
 
 export const DashboardLayout = ({
   children,
@@ -39,16 +32,18 @@ export const DashboardLayout = ({
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans">
       <header className="sticky top-0 z-40 w-full border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
-        <div className="container max-w-7xl flex h-16 items-center justify-between mx-auto px-4 md:px-6">
+        <div className="flex h-16 items-center justify-between w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-6">
             <div
-              className="flex items-center gap-3 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer"
               onClick={() => navigate(RouteConstant.DASHBOARD)}
             >
-              <div className="p-2 bg-primary rounded-md shadow-sm">
-                <Wallet className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white uppercase italic">
+              <img
+                src="/logo.webp"
+                alt="CatatUang"
+                className="w-9 h-9 object-contain rounded-md"
+              />
+              <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white uppercase italic hidden sm:block">
                 CatatUang
               </span>
             </div>
@@ -98,7 +93,7 @@ export const DashboardLayout = ({
       </header>
 
       {/* Main Content */}
-      <main className="container max-w-7xl mx-auto px-4 md:px-6 py-8 pb-32 lg:pb-8 animate-in fade-in duration-500">
+      <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-32 lg:pb-8 animate-in fade-in duration-500">
         {children}
       </main>
 

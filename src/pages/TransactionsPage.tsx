@@ -3,7 +3,7 @@ import { useTransactions } from '@/features/transactions/hooks/useTransactions';
 import { TransactionList } from '@/features/transactions/components/TransactionList';
 import { TransactionForm } from '@/features/transactions/components/TransactionForm';
 import { Button } from '@/components/ui/button';
-import { Plus, CalendarIcon, Download } from 'lucide-react';
+import { Plus, CalendarIcon } from 'lucide-react';
 import { useState } from 'react';
 import {
   TransactionType,
@@ -85,13 +85,13 @@ export const TransactionsPage = () => {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <Button
+            {/* <Button
               variant="outline"
               size="sm"
               className="h-10 px-4 rounded-md border-slate-200 dark:border-slate-800"
             >
               <Download className="mr-2 h-4 w-4" /> Export
-            </Button>
+            </Button> */}
             <Button
               size="sm"
               onClick={() => {

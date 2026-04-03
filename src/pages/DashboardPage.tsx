@@ -4,9 +4,8 @@ import { GmailConnectionCard } from '@/features/gmail/components/GmailConnection
 import { ExpenseChart } from '@/features/dashboard/components/ExpenseChart';
 import { useQuery } from '@tanstack/react-query';
 import { transactionsService } from '@/features/transactions/services/transactions.service';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Receipt, Wallet, Info } from 'lucide-react';
+import { ArrowRight, Receipt } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { RouteConstant } from '@/constants/routes.constant';
 import { cn } from '@/lib/utils';
@@ -46,7 +45,7 @@ export const DashboardPage = () => {
 
         <DashboardSummary />
 
-        <div className="grid gap-8 lg:grid-cols-3">
+        <div className="grid gap-6 lg:gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-8">
             <ExpenseChart />
 
@@ -152,7 +151,7 @@ export const DashboardPage = () => {
           <div className="space-y-8">
             <GmailConnectionCard />
 
-            <Card className="bg-slate-900 dark:bg-slate-800 text-white border-none shadow-md overflow-hidden rounded-lg">
+            {/* <Card className="bg-slate-900 dark:bg-slate-800 text-white border-none shadow-md overflow-hidden rounded-lg">
               <CardContent className="p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-white/10 rounded-md">
@@ -171,7 +170,7 @@ export const DashboardPage = () => {
                   <Wallet className="w-4 h-4 text-slate-500" />
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
         </div>
       </div>

@@ -32,23 +32,23 @@ export const StatCard: React.FC<StatCardProps> = ({
         className,
       )}
     >
-      <CardContent className="p-5">
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">
+      <CardContent className="p-4 sm:p-5">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
+          <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500">
             {title}
           </span>
           <div
             className={cn(
-              'p-2 rounded-md bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400',
+              'p-1.5 sm:p-2 rounded-md bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400',
               iconClassName,
             )}
           >
-            <Icon className="w-4 h-4" />
+            <Icon className="w-3.5 h-3.5 sm:w-4 h-4" />
           </div>
         </div>
 
-        <div className="space-y-1">
-          <div className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+        <div className="space-y-0.5 sm:space-y-1">
+          <div className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white truncate">
             {value}
           </div>
 
