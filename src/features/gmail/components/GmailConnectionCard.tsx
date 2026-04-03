@@ -98,31 +98,31 @@ export const GmailConnectionCard: React.FC = () => {
       <CardContent className="p-6">
         {isConnected ? (
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 rounded-md bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 gap-4">
               <div className="flex items-center space-x-3">
                 {isWatchValid ? (
                   <CheckCircle className="w-5 h-5 text-primary" />
                 ) : (
                   <AlertCircle className="w-5 h-5 text-amber-500" />
                 )}
-                <div>
+                <div className="min-w-0">
                   <p className="text-sm font-black uppercase tracking-tight text-slate-900 dark:text-white">
                     {isWatchValid ? 'Active' : 'Paused'}
                   </p>
-                  <p className="text-[10px] text-slate-400 mt-0.5 font-bold uppercase tracking-tighter">
+                  <p className="text-[10px] text-slate-400 mt-0.5 font-bold uppercase tracking-tighter truncate">
                     {data?.lastSyncedAt
-                      ? `Last: ${new Date(data.lastSyncedAt).toLocaleString()}`
+                      ? `Last: ${new Date(data.lastSyncedAt).toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}`
                       : 'Never Synced'}
                   </p>
                 </div>
               </div>
 
-              <div className="flex space-x-2">
+              <div className="flex flex-wrap gap-2 sm:space-x-2 sm:gap-0">
                 {isWatchValid && (
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-8 rounded-md text-[10px] font-black uppercase tracking-widest border-primary/20 text-primary hover:bg-primary/5"
+                    className="h-8 rounded-md text-[9px] sm:text-[10px] font-black uppercase tracking-widest border-primary/20 text-primary hover:bg-primary/5 px-2.5"
                     onClick={() => syncMutation.mutate()}
                     disabled={syncMutation.isPending}
                   >
@@ -132,14 +132,14 @@ export const GmailConnectionCard: React.FC = () => {
                         syncMutation.isPending && 'animate-spin',
                       )}
                     />
-                    Sync Now
+                    Sync
                   </Button>
                 )}
                 {!isWatchValid && (
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-8 rounded-md text-[10px] font-black uppercase tracking-widest"
+                    className="h-8 rounded-md text-[9px] sm:text-[10px] font-black uppercase tracking-widest px-2.5"
                     onClick={() => startMutation.mutate()}
                     disabled={startMutation.isPending}
                   >
@@ -155,7 +155,7 @@ export const GmailConnectionCard: React.FC = () => {
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="h-8 rounded-md text-[10px] font-black uppercase tracking-widest text-red-500 hover:text-red-600"
+                  className="h-8 rounded-md text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-red-500 hover:text-red-600 px-2.5"
                   onClick={() => stopMutation.mutate()}
                   disabled={stopMutation.isPending}
                 >
@@ -165,7 +165,7 @@ export const GmailConnectionCard: React.FC = () => {
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="h-8 rounded-md text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-red-600"
+                  className="h-8 rounded-md text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-red-600 px-2.5"
                   onClick={() => {
                     const confirmed = window.confirm(
                       'Are you sure you want to disconnect your Google account?',

@@ -81,9 +81,9 @@ export const DashboardPage = () => {
                   {recentTransactions.data.slice(0, 5).map((tx) => (
                     <div
                       key={tx.id}
-                      className="flex items-center justify-between p-3 rounded-md border border-transparent hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
+                      className="flex items-center justify-between p-3 rounded-md border border-transparent hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors gap-3 overflow-hidden"
                     >
-                      <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-3 min-w-0 flex-1">
                         <div
                           className={cn(
                             'p-2 rounded-md',
@@ -94,7 +94,7 @@ export const DashboardPage = () => {
                         >
                           <Receipt className="w-5 h-5" />
                         </div>
-                        <div className="min-w-0">
+                        <div className="min-w-0 flex-1 px-1">
                           <p className="font-bold text-slate-900 dark:text-white truncate">
                             {tx.merchant || 'Uncategorized'}
                           </p>
@@ -114,7 +114,7 @@ export const DashboardPage = () => {
                       </div>
                       <p
                         className={cn(
-                          'font-black text-base',
+                          'font-black text-base whitespace-nowrap shrink-0',
                           tx.transactionType === 'income'
                             ? 'text-primary'
                             : 'text-slate-900 dark:text-white',

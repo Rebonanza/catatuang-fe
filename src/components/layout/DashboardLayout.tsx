@@ -41,9 +41,9 @@ export const DashboardLayout = ({
               <img
                 src="/logo.webp"
                 alt="CatatUang"
-                className="w-9 h-9 object-contain rounded-md"
+                className="w-10 h-10 object-contain rounded-md"
               />
-              <span className="text-xl font-black tracking-tight text-slate-900 dark:text-white uppercase italic hidden sm:block">
+              <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 dark:text-white uppercase italic">
                 CatatUang
               </span>
             </div>
@@ -69,14 +69,14 @@ export const DashboardLayout = ({
             </nav>
           </div>
 
-          <div className="flex items-center gap-2 md:gap-4">
+          <div className="flex items-center gap-1.5 sm:gap-4">
             <InstallAppButton />
 
-            <div className="flex items-center gap-3 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+            <div className="hidden sm:flex items-center gap-3 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
               <div className="w-6 h-6 rounded-md bg-primary/20 flex items-center justify-center text-primary">
                 <User className="w-4 h-4" />
               </div>
-              <span className="text-xs font-black uppercase tracking-tighter text-slate-700 dark:text-slate-200 hidden sm:inline-block">
+              <span className="text-xs font-black uppercase tracking-tighter text-slate-700 dark:text-slate-200">
                 {user?.name || 'User'}
               </span>
             </div>
@@ -84,7 +84,7 @@ export const DashboardLayout = ({
               variant="ghost"
               size="icon"
               onClick={handleLogout}
-              className="h-9 w-9 rounded-md text-slate-400 hover:text-red-500 hover:bg-red-50"
+              className="h-9 w-9 rounded-md text-slate-400 hover:text-red-500 hover:bg-red-50 shrink-0"
             >
               <LogOut className="w-5 h-5" />
             </Button>
