@@ -17,7 +17,19 @@ const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   return <>{children}</>;
 };
 
+import { useRegisterSW } from 'virtual:pwa-register/react';
+
 function App() {
+  // Register PWA service worker
+  useRegisterSW({
+    onRegistered() {
+      // Service worker successfully registered
+    },
+    onRegisterError() {
+      // Error during service worker registration
+    },
+  });
+
   return (
     <Routes>
       {/* Public Routes */}

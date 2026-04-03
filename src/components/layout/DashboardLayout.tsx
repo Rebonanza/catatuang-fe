@@ -3,6 +3,7 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import { RouteConstant } from '@/constants/routes.constant';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { InstallAppButton } from '../InstallAppButton';
 import {
   Wallet,
   LayoutDashboard,
@@ -73,7 +74,9 @@ export const DashboardLayout = ({
             </nav>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
+            <InstallAppButton />
+
             <div className="flex items-center gap-3 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
               <div className="w-6 h-6 rounded-md bg-primary/20 flex items-center justify-center text-primary">
                 <User className="w-4 h-4" />
