@@ -25,11 +25,11 @@ export const getDashboardSummary = async (
   if (month) params.append('month', month.toString());
   if (year) params.append('year', year.toString());
 
-  const response = await apiClient.get<{
-    success: boolean;
-    data: DashboardSummary;
-  }>(`/transactions/summary`, { params });
-  return response.data.data;
+  const response = await apiClient.get<DashboardSummary>(
+    `/transactions/summary`,
+    { params },
+  );
+  return response.data;
 };
 
 export interface CategorySummary {
@@ -46,9 +46,9 @@ export const getCategorySummary = async (
   if (month) params.append('month', month.toString());
   if (year) params.append('year', year.toString());
 
-  const response = await apiClient.get<{
-    success: boolean;
-    data: CategorySummary[];
-  }>(`/transactions/categories-summary`, { params });
-  return response.data.data;
+  const response = await apiClient.get<CategorySummary[]>(
+    `/transactions/categories-summary`,
+    { params },
+  );
+  return response.data;
 };

@@ -18,6 +18,14 @@ const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   return <>{children}</>;
 };
 
+const PublicRoute = ({ children }: { children: ReactNode }) => {
+  const { accessToken } = useAuthStore();
+  if (accessToken) {
+    return <Navigate to={RouteConstant.DASHBOARD} replace />;
+  }
+  return <>{children}</>;
+};
+
 import { useRegisterSW } from 'virtual:pwa-register/react';
 
 function App() {
@@ -34,8 +42,22 @@ function App() {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path={RouteConstant.LOGIN} element={<LoginPage />} />
-      <Route path={RouteConstant.REGISTER} element={<RegisterPage />} />
+      <Route
+        path={RouteConstant.LOGIN}
+        element={
+          <PublicRoute>
+            <LoginPage />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path={RouteConstant.REGISTER}
+        element={
+          <PublicRoute>
+            <RegisterPage />
+          </PublicRoute>
+        }
+      />
       <Route
         path={RouteConstant.AUTH_CALLBACK}
         element={<AuthCallbackPage />}

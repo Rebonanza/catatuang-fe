@@ -16,9 +16,34 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-// Response interceptor — handle 401, refresh token
+// Response interceptor — handle standardized envelope & error refresh
 apiClient.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // If the response follows our standardized envelope { success, data, meta }
+    if (
+      response.data &&
+      typeof response.data === 'object' &&
+      'success' in response.data
+    ) {
+      const { success, data, meta } = response.data;
+
+      if (success) {
+        // If meta and data are present at the top level, re-wrap for existing service patterns
+        if (meta !== undefined && Array.isArray(data)) {
+          return {
+            ...response,
+            data: { data, meta },
+          };
+        }
+        // Otherwise, just return the data directly
+        return {
+          ...response,
+          data,
+        };
+      }
+    }
+    return response;
+  },
   async (error) => {
     const originalRequest = error.config;
     if (error.response?.status === 401 && !originalRequest._retry) {

@@ -12,7 +12,7 @@ export const SettingsPage = () => {
     queryFn: () => authService.getMe(),
   });
 
-  const user = userResponse?.data;
+  const user = userResponse;
 
   return (
     <DashboardLayout>

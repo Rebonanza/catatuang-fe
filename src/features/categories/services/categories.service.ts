@@ -28,34 +28,25 @@ export const categoriesService = {
     meta: { total: number; page: number; limit: number; totalPages: number };
   }> {
     const response = await apiClient.get<{
-      success: boolean;
-      data: {
-        data: Category[];
-        meta: {
-          total: number;
-          page: number;
-          limit: number;
-          totalPages: number;
-        };
+      data: Category[];
+      meta: {
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
       };
     }>('/categories', { params });
-    return response.data.data;
+    return response.data;
   },
 
   async create(data: CreateCategoryDto): Promise<Category> {
-    const response = await apiClient.post<{ success: boolean; data: Category }>(
-      '/categories',
-      data,
-    );
-    return response.data.data;
+    const response = await apiClient.post<Category>('/categories', data);
+    return response.data;
   },
 
   async update(id: string, data: UpdateCategoryDto): Promise<Category> {
-    const response = await apiClient.patch<{
-      success: boolean;
-      data: Category;
-    }>(`/categories/${id}`, data);
-    return response.data.data;
+    const response = await apiClient.patch<Category>(`/categories/${id}`, data);
+    return response.data;
   },
 
   async delete(id: string): Promise<void> {
