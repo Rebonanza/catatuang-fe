@@ -52,6 +52,7 @@ export const TransactionsPage = () => {
     startDate: dateRange.from?.toISOString(),
     endDate: dateRange.to?.toISOString(),
     transactionType: transactionType === 'all' ? '' : transactionType,
+    categoryId: categoryId === 'all' ? '' : categoryId,
     page: currentPage,
     limit: itemsPerPage,
   });
@@ -98,7 +99,7 @@ export const TransactionsPage = () => {
                 setEditingTransaction(undefined);
                 setIsFormOpen(true);
               }}
-              className="h-10 px-4 rounded-md bg-primary text-white hover:bg-primary/90"
+              className="h-10 px-6 rounded-md bg-primary text-white hover:bg-primary/90 w-full md:w-auto font-black uppercase tracking-widest text-[10px] shadow-sm shadow-primary/20"
             >
               <Plus className="mr-2 h-4 w-4" /> New Transaction
             </Button>
@@ -125,9 +126,9 @@ export const TransactionsPage = () => {
         </Dialog>
 
         <div className="bg-white dark:bg-slate-950 p-4 border border-slate-200 dark:border-slate-800 rounded-lg">
-          <div className="flex flex-wrap items-end gap-4">
-            <div className="space-y-1.5 flex-1 min-w-[180px]">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 ml-1">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-4">
+            <div className="space-y-1.5 w-full sm:flex-1">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">
                 Type
               </label>
               <Select
@@ -137,8 +138,14 @@ export const TransactionsPage = () => {
                   setCurrentPage(1);
                 }}
               >
-                <SelectTrigger className="w-full h-10 py-2 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-md">
-                  <SelectValue placeholder="All Types" />
+                <SelectTrigger className="w-full h-11 py-2 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-md focus:ring-2 focus:ring-primary/20">
+                  <SelectValue placeholder="All Types">
+                    {transactionType === 'all'
+                      ? 'All Types'
+                      : transactionType === TransactionType.INCOME
+                        ? 'Income'
+                        : 'Expense'}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent className="rounded-md">
                   <SelectItem value="all">All Types</SelectItem>
@@ -150,8 +157,8 @@ export const TransactionsPage = () => {
               </Select>
             </div>
 
-            <div className="space-y-1.5 flex-1 min-w-[180px]">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 ml-1">
+            <div className="space-y-1.5 w-full sm:flex-1">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">
                 Category
               </label>
               <Select
@@ -161,8 +168,14 @@ export const TransactionsPage = () => {
                   setCurrentPage(1);
                 }}
               >
-                <SelectTrigger className="w-full h-10 py-2 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-md">
-                  <SelectValue placeholder="All Categories" />
+                <SelectTrigger className="w-full h-11 py-2 bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-md focus:ring-2 focus:ring-primary/20">
+                  <SelectValue placeholder="All Categories">
+                    {categoryId === 'all'
+                      ? 'All Categories'
+                      : (categories.find(
+                          (cat: Category) => cat.id === categoryId,
+                        )?.name ?? 'All Categories')}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent className="rounded-md">
                   <SelectItem value="all">All Categories</SelectItem>
@@ -175,8 +188,8 @@ export const TransactionsPage = () => {
               </Select>
             </div>
 
-            <div className="space-y-1.5 min-w-[240px]">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 ml-1">
+            <div className="space-y-1.5 w-full sm:min-w-[240px]">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 ml-1">
                 Date Range
               </label>
               <Popover>
@@ -185,7 +198,7 @@ export const TransactionsPage = () => {
                     <Button
                       variant="outline"
                       className={cn(
-                        'w-full h-10 py-2 justify-start text-left font-medium bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-md',
+                        'w-full h-11 py-2 justify-start text-left font-medium bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-md focus:ring-2 focus:ring-primary/20',
                         !dateRange.from && 'text-slate-400',
                       )}
                     >
@@ -226,11 +239,11 @@ export const TransactionsPage = () => {
 
             {hasFilters && (
               <Button
-                variant="ghost"
+                variant="secondary"
                 onClick={clearFilters}
-                className="h-10 px-4 text-slate-400 hover:text-primary font-bold text-xs"
+                className="h-11 px-6 text-slate-500 hover:text-red-500 font-black uppercase tracking-widest text-[10px] w-full sm:w-auto bg-slate-100/50 dark:bg-slate-900/50 border-none rounded-md"
               >
-                Reset
+                Reset Filters
               </Button>
             )}
           </div>

@@ -7,6 +7,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { CategoriesPage } from './pages/CategoriesPage';
 import { TransactionsPage } from './pages/TransactionsPage';
+import { SettingsPage } from './pages/SettingsPage';
 import { AuthCallbackPage } from './pages/AuthCallbackPage';
 
 const ProtectedRoute = ({ children }: { children: ReactNode }) => {
@@ -70,6 +71,14 @@ function App() {
         element={
           <ProtectedRoute>
             <CategoriesPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={RouteConstant.SETTINGS}
+        element={
+          <ProtectedRoute>
+            <SettingsPage />
           </ProtectedRoute>
         }
       />

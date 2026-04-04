@@ -11,6 +11,7 @@ interface StatCardProps {
   trend?: {
     value: number;
     isPositive: boolean;
+    noData: boolean;
   };
   className?: string;
   iconClassName?: string;
@@ -54,7 +55,7 @@ export const StatCard: React.FC<StatCardProps> = ({
 
           {(description || trend) && (
             <div className="flex items-center gap-2 mt-2">
-              {trend && (
+              {trend && !trend.noData && (
                 <span
                   className={cn(
                     'text-[10px] font-black uppercase tracking-tight px-1.5 py-0.5 rounded-sm',
@@ -63,7 +64,9 @@ export const StatCard: React.FC<StatCardProps> = ({
                       : 'bg-red-50 text-red-600 dark:bg-red-950/30 dark:text-red-400',
                   )}
                 >
-                  {trend.isPositive ? '↑' : '↓'} {Math.abs(trend.value)}%
+                  {trend.value === 100 && trend.isPositive
+                    ? '✦ New'
+                    : `${trend.isPositive ? '↑' : '↓'} ${Math.abs(trend.value)}%`}
                 </span>
               )}
               {description && (

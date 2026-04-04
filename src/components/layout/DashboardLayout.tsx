@@ -4,7 +4,14 @@ import { RouteConstant } from '@/constants/routes.constant';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { InstallAppButton } from '../InstallAppButton';
-import { LayoutDashboard, Receipt, Tag, LogOut, User } from 'lucide-react';
+import {
+  LayoutDashboard,
+  Receipt,
+  Tag,
+  LogOut,
+  User,
+  Settings,
+} from 'lucide-react';
 
 export const DashboardLayout = ({
   children,
@@ -27,6 +34,7 @@ export const DashboardLayout = ({
     },
     { label: 'Transactions', path: RouteConstant.TRANSACTIONS, icon: Receipt },
     { label: 'Categories', path: RouteConstant.CATEGORIES, icon: Tag },
+    { label: 'Settings', path: RouteConstant.SETTINGS, icon: Settings },
   ];
 
   return (

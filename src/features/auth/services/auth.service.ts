@@ -4,6 +4,7 @@ import type {
   RegisterDto,
   AuthResponse,
   User,
+  ChangePasswordDto,
 } from '../types/auth.type';
 
 export const authService = {
@@ -30,6 +31,14 @@ export const authService = {
   async getMe(): Promise<{ success: boolean; data: User }> {
     const response = await apiClient.get<{ success: boolean; data: User }>(
       '/auth/me',
+    );
+    return response.data;
+  },
+
+  async changePassword(data: ChangePasswordDto): Promise<{ success: boolean }> {
+    const response = await apiClient.post<{ success: boolean }>(
+      '/auth/change-password',
+      data,
     );
     return response.data;
   },

@@ -36,8 +36,8 @@ export const DashboardPage = () => {
               Welcome back to your personal finance dashboard.
             </p>
           </div>
-          <Link to={RouteConstant.TRANSACTIONS}>
-            <Button className="bg-primary text-white h-10 px-6 rounded-md shadow-sm">
+          <Link to={RouteConstant.TRANSACTIONS} className="w-full md:w-auto">
+            <Button className="bg-primary text-white h-10 px-6 rounded-md shadow-sm w-full md:w-auto font-black uppercase tracking-widest text-[10px] shadow-primary/20">
               Add Transaction
             </Button>
           </Link>

@@ -3,6 +3,12 @@ export interface User {
   email: string;
   name: string;
   avatarUrl: string | null;
+  hasPassword?: boolean;
+}
+
+export interface ChangePasswordDto {
+  currentPassword?: string;
+  newPassword: string;
 }
 
 export interface AuthResponse {

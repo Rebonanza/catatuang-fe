@@ -5,6 +5,7 @@ export const RouteConstant = {
   DASHBOARD: '/dashboard',
   TRANSACTIONS: '/transactions',
   CATEGORIES: '/categories',
+  SETTINGS: '/settings',
   AUTH_CALLBACK: '/auth/callback',
 } as const;
 

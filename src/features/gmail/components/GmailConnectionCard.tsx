@@ -117,12 +117,12 @@ export const GmailConnectionCard: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-2 sm:space-x-2 sm:gap-0">
+              <div className="flex flex-col gap-2 w-full sm:w-auto">
                 {isWatchValid && (
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-8 rounded-md text-[9px] sm:text-[10px] font-black uppercase tracking-widest border-primary/20 text-primary hover:bg-primary/5 px-2.5"
+                    className="w-full sm:w-auto h-8 rounded-md text-[9px] sm:text-[10px] font-black uppercase tracking-widest border-primary/20 text-primary hover:bg-primary/5 px-2.5"
                     onClick={() => syncMutation.mutate()}
                     disabled={syncMutation.isPending}
                   >
@@ -139,7 +139,7 @@ export const GmailConnectionCard: React.FC = () => {
                   <Button
                     size="sm"
                     variant="outline"
-                    className="h-8 rounded-md text-[9px] sm:text-[10px] font-black uppercase tracking-widest px-2.5"
+                    className="w-full sm:w-auto h-8 rounded-md text-[9px] sm:text-[10px] font-black uppercase tracking-widest px-2.5"
                     onClick={() => startMutation.mutate()}
                     disabled={startMutation.isPending}
                   >
@@ -154,8 +154,8 @@ export const GmailConnectionCard: React.FC = () => {
                 )}
                 <Button
                   size="sm"
-                  variant="ghost"
-                  className="h-8 rounded-md text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-red-500 hover:text-red-600 px-2.5"
+                  variant="secondary"
+                  className="w-full sm:w-auto h-8 rounded-md text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-red-500/80 hover:text-red-500 bg-red-50/50 dark:bg-red-950/10 hover:bg-red-50 dark:hover:bg-red-950/20 px-2.5 justify-center border-none"
                   onClick={() => stopMutation.mutate()}
                   disabled={stopMutation.isPending}
                 >
@@ -164,8 +164,8 @@ export const GmailConnectionCard: React.FC = () => {
                 </Button>
                 <Button
                   size="sm"
-                  variant="ghost"
-                  className="h-8 rounded-md text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-red-600 px-2.5"
+                  variant="secondary"
+                  className="w-full sm:w-auto h-8 rounded-md text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-red-600 bg-slate-100/50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 px-2.5 justify-center border-none"
                   onClick={() => {
                     const confirmed = window.confirm(
                       'Are you sure you want to disconnect your Google account?',

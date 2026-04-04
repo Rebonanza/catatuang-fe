@@ -53,6 +53,12 @@ export const ExpenseChart: React.FC = () => {
     }).format(value);
   };
 
+  const now = new Date();
+  const monthLabel = now.toLocaleString('en-US', {
+    month: 'long',
+    year: 'numeric',
+  });
+
   return (
     <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 rounded-lg shadow-sm overflow-hidden">
       <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-900 flex items-center justify-between">
@@ -61,7 +67,7 @@ export const ExpenseChart: React.FC = () => {
             Expense Breakdown
           </h3>
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">
-            By Category
+            {monthLabel} · By Category
           </p>
         </div>
         <div className="p-2 bg-slate-50 dark:bg-slate-900 rounded-md border border-slate-100 dark:border-slate-800">

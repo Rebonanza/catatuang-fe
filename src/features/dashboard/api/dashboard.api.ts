@@ -3,6 +3,7 @@ import { apiClient } from '@/config/axios.config';
 export interface Trend {
   value: number;
   isPositive: boolean;
+  noData: boolean;
 }
 
 export interface DashboardSummary {
