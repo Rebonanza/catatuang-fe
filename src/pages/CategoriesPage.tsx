@@ -51,16 +51,22 @@ export const CategoriesPage = () => {
               Organize your expenses and income sources.
             </p>
           </div>
-          <Button
-            onClick={() => {
-              setEditingCategory(undefined);
-              setIsFormOpen(true);
-            }}
-            className="h-10 px-4 rounded-md bg-primary text-white hover:bg-primary/90 shadow-sm"
-          >
-            <Plus className="mr-2 h-4 w-4" /> New Category
-          </Button>
+          <div className="flex items-center gap-2">
+            {/* Action buttons can be added here if needed in the future */}
+          </div>
         </div>
+
+        {/* Floating Action Button */}
+        <Button
+          size="icon"
+          onClick={() => {
+            setEditingCategory(undefined);
+            setIsFormOpen(true);
+          }}
+          className="fixed bottom-28 md:bottom-8 right-6 md:right-8 w-14 h-14 rounded-2xl bg-primary text-white hover:bg-primary/90 shadow-2xl shadow-primary/40 z-50 animate-in zoom-in duration-300"
+        >
+          <Plus className="w-6 h-6" />
+        </Button>
 
         <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
           <DialogContent

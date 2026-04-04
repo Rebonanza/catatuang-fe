@@ -9,6 +9,10 @@ import { ArrowRight, Receipt } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { RouteConstant } from '@/constants/routes.constant';
 import { cn } from '@/lib/utils';
+import { Plus } from 'lucide-react';
+import { useState } from 'react';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { TransactionForm } from '@/features/transactions/components/TransactionForm';
 
 export const DashboardPage = () => {
   const { data: recentTransactions, isLoading } = useQuery({
@@ -24,6 +28,8 @@ export const DashboardPage = () => {
     }).format(value);
   };
 
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   return (
     <DashboardLayout>
       <div className="space-y-8 animate-in fade-in duration-500">
@@ -36,12 +42,31 @@ export const DashboardPage = () => {
               Welcome back to your personal finance dashboard.
             </p>
           </div>
-          <Link to={RouteConstant.TRANSACTIONS} className="w-full md:w-auto">
-            <Button className="bg-primary text-white h-10 px-6 rounded-md shadow-sm w-full md:w-auto font-black uppercase tracking-widest text-[10px] shadow-primary/20">
-              Add Transaction
-            </Button>
-          </Link>
+          <div className="flex items-center gap-2">
+            {/* Action buttons can be added here if needed in the future */}
+          </div>
         </div>
+
+        <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+          <DialogContent
+            className="sm:max-w-2xl p-0 overflow-hidden border border-slate-200 dark:border-slate-800 rounded-lg shadow-xl"
+            showCloseButton={false}
+          >
+            <TransactionForm
+              onSuccess={() => setIsFormOpen(false)}
+              onCancel={() => setIsFormOpen(false)}
+            />
+          </DialogContent>
+        </Dialog>
+
+        {/* Floating Action Button */}
+        <Button
+          size="icon"
+          onClick={() => setIsFormOpen(true)}
+          className="fixed bottom-28 md:bottom-8 right-6 md:right-8 w-14 h-14 rounded-2xl bg-primary text-white hover:bg-primary/90 shadow-2xl shadow-primary/40 z-50 animate-in zoom-in duration-300"
+        >
+          <Plus className="w-6 h-6" />
+        </Button>
 
         <DashboardSummary />
 
