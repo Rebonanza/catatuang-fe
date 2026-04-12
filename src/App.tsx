@@ -27,6 +27,10 @@ const PublicRoute = ({ children }: { children: ReactNode }) => {
 };
 
 import { useRegisterSW } from 'virtual:pwa-register/react';
+import { useEffect } from 'react';
+import { fcmService } from './features/notifications/services/fcm.service';
+import { onMessage } from 'firebase/messaging';
+import { messaging } from './config/firebase.config';
 
 function App() {
   // Register PWA service worker
@@ -38,6 +42,31 @@ function App() {
       // Error during service worker registration
     },
   });
+
+  const { accessToken } = useAuthStore();
+
+  useEffect(() => {
+    if (accessToken) {
+      // Small delay to ensure everything is ready
+      const timer = setTimeout(() => {
+        fcmService.requestPermissionAndGetToken();
+      }, 3000);
+
+      // Listen for foreground messages
+      const unsubscribe = onMessage(messaging, (payload) => {
+        console.log('Foreground message received:', payload);
+        if (payload.notification) {
+          // You could replace this with a proper Toast component later
+          alert(`${payload.notification.title}\n${payload.notification.body}`);
+        }
+      });
+
+      return () => {
+        clearTimeout(timer);
+        unsubscribe();
+      };
+    }
+  }, [accessToken]);
 
   return (
     <Routes>
