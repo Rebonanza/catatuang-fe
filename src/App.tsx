@@ -54,10 +54,22 @@ function App() {
 
       // Listen for foreground messages
       const unsubscribe = onMessage(messaging, (payload) => {
-        console.log('Foreground message received:', payload);
         if (payload.notification) {
-          // You could replace this with a proper Toast component later
-          alert(`${payload.notification.title}\n${payload.notification.body}`);
+          if (Notification.permission === 'granted') {
+            navigator.serviceWorker.ready.then((registration) => {
+              registration.showNotification(
+                payload.notification?.title || 'CatatUang',
+                {
+                  body: payload.notification?.body,
+                  icon: '/android-chrome-192x192.png',
+                  badge: '/favicon-32x32.png',
+                  tag: 'transaction-notification',
+                  renotify: true,
+                  data: payload.data,
+                },
+              );
+            });
+          }
         }
       });
 

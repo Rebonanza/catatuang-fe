@@ -45,15 +45,6 @@ class FcmService {
       console.error('Failed to register FCM token with backend', error);
     }
   }
-
-  onMessageListener() {
-    return new Promise((resolve) => {
-      onMessage(messaging, (payload) => {
-        console.log('Foreground message received:', payload);
-        resolve(payload);
-      });
-    });
-  }
 }
 
 export const fcmService = new FcmService();
