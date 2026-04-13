@@ -1,4 +1,4 @@
-import { getToken, onMessage } from 'firebase/messaging';
+import { getToken } from 'firebase/messaging';
 import { messaging } from '../../../config/firebase.config';
 import { apiClient } from '../../../config/axios.config';
 

@@ -64,7 +64,6 @@ function App() {
                   icon: '/android-chrome-192x192.png',
                   badge: '/favicon-32x32.png',
                   tag: 'transaction-notification',
-                  renotify: true,
                   data: payload.data,
                 },
               );
