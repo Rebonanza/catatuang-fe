@@ -11,12 +11,22 @@ export const transactionsService = {
     startDate?: string;
     endDate?: string;
     transactionType?: string;
+    categoryId?: string;
     page?: number;
     limit?: number;
   }): Promise<{
     data: Transaction[];
     meta: { total: number; page: number; limit: number; totalPages: number };
   }> {
+    // Strip keys with empty string / undefined so they are not sent as ?key=
+    const params = filters
+      ? Object.fromEntries(
+          Object.entries(filters).filter(
+            ([, v]) => v !== undefined && v !== '',
+          ),
+        )
+      : undefined;
+
     const response = await apiClient.get<{
       data: Transaction[];
       meta: {
@@ -25,7 +35,7 @@ export const transactionsService = {
         limit: number;
         totalPages: number;
       };
-    }>('/transactions', { params: filters });
+    }>('/transactions', { params });
     return response.data;
   },
 
