@@ -11,13 +11,19 @@ import {
   Tooltip,
 } from 'recharts';
 import { PieChart } from 'lucide-react';
+import { formatCurrency, formatMonthYear } from '@/lib/format.util';
 
 export const ExpenseChart: React.FC = () => {
   const [isMounted, setIsMounted] = React.useState(false);
-  const { data, isLoading } = useQuery({
+  const { data: apiResponse, isLoading } = useQuery({
     queryKey: ['categorySummary'],
-    queryFn: () => getCategorySummary(),
+    queryFn: async () => {
+      const res = await getCategorySummary();
+      return res.data;
+    },
   });
+
+  const data = apiResponse ?? [];
 
   React.useEffect(() => {
     setIsMounted(true);
@@ -45,19 +51,7 @@ export const ExpenseChart: React.FC = () => {
     );
   }
 
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(value);
-  };
-
-  const now = new Date();
-  const monthLabel = now.toLocaleString('en-US', {
-    month: 'long',
-    year: 'numeric',
-  });
+  const monthLabel = formatMonthYear();
 
   return (
     <Card className="border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 rounded-lg shadow-sm overflow-hidden">
@@ -74,7 +68,7 @@ export const ExpenseChart: React.FC = () => {
           <PieChart className="w-4 h-4 text-primary" />
         </div>
       </div>
-      <CardContent className="h-72 p-1 sm:p-6 overflow-hidden">
+      <CardContent className="h-[300px] p-1 sm:p-6 overflow-hidden">
         <div className="w-full h-full min-w-0">
           {isMounted && (
             <ResponsiveContainer width="100%" height="100%">
@@ -82,7 +76,7 @@ export const ExpenseChart: React.FC = () => {
                 <Pie
                   data={data}
                   cx="50%"
-                  cy="50%"
+                  cy="45%"
                   innerRadius={60}
                   outerRadius={85}
                   paddingAngle={4}
@@ -107,14 +101,17 @@ export const ExpenseChart: React.FC = () => {
                 />
                 <Legend
                   verticalAlign="bottom"
-                  height={36}
+                  align="center"
                   iconType="circle"
+                  iconSize={8}
+                  layout="horizontal"
                   wrapperStyle={{
-                    paddingTop: '20px',
-                    fontSize: '10px',
+                    paddingTop: '0px',
+                    fontSize: '9px',
                     fontWeight: '900',
                     textTransform: 'uppercase',
                     letterSpacing: '0.05em',
+                    lineHeight: '1.4',
                   }}
                 />
               </RechartsPieChart>

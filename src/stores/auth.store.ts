@@ -1,13 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import axios from 'axios';
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  avatarUrl: string | null;
-}
+import type { User } from '@/features/auth/types/auth.type';
 
 interface AuthState {
   accessToken: string | null;
@@ -54,9 +48,6 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: 'auth-storage',
-      // We only persist user/accessToken so user stays "logged in" across tabs/reloads
-      // Alternatively, persist could just hold user info, but handling JWT access token in memory is better for absolute security.
-      // For MVP ease of use, we'll let zustand/persist handle it in localStorage.
     },
   ),
 );

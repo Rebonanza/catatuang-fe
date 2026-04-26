@@ -11,6 +11,7 @@ import {
   Eye,
   EyeOff,
 } from 'lucide-react';
+import { formatCurrency } from '@/lib/format.util';
 
 const MONTH_NAMES = [
   'January',
@@ -38,7 +39,10 @@ export const DashboardSummary: React.FC = () => {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['dashboardSummary'],
-    queryFn: () => getDashboardSummary(),
+    queryFn: async () => {
+      const res = await getDashboardSummary();
+      return res.data;
+    },
   });
 
   if (isLoading) {
@@ -64,14 +68,6 @@ export const DashboardSummary: React.FC = () => {
       </div>
     );
   }
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(value);
-  };
 
   const mask = (value: string) => (isHidden ? 'Rp ••••••' : value);
 

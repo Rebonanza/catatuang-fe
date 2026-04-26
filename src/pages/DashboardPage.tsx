@@ -13,20 +13,16 @@ import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { TransactionForm } from '@/features/transactions/components/TransactionForm';
+import { formatCurrency, formatTransactionDate } from '@/lib/format.util';
 
 export const DashboardPage = () => {
   const { data: recentTransactions, isLoading } = useQuery({
     queryKey: ['recentTransactions'],
-    queryFn: () => transactionsService.getAll({ transactionType: '' }),
+    queryFn: async () => {
+      const res = await transactionsService.getAll({ transactionType: '' });
+      return res.data;
+    },
   });
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(value);
-  };
 
   const [isFormOpen, setIsFormOpen] = useState(false);
 
@@ -101,9 +97,9 @@ export const DashboardPage = () => {
                     />
                   ))}
                 </div>
-              ) : recentTransactions && recentTransactions.data.length > 0 ? (
+              ) : recentTransactions && recentTransactions.length > 0 ? (
                 <div className="space-y-1">
-                  {recentTransactions.data.slice(0, 5).map((tx) => (
+                  {recentTransactions.slice(0, 5).map((tx) => (
                     <div
                       key={tx.id}
                       className="flex items-center justify-between p-3 rounded-md border border-transparent hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors gap-3 overflow-hidden"
@@ -124,16 +120,8 @@ export const DashboardPage = () => {
                             {tx.merchant || 'Uncategorized'}
                           </p>
                           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5">
-                            {new Date(tx.transactedAt)
-                              .toLocaleString('id-ID', {
-                                day: '2-digit',
-                                month: 'short',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                hour12: false,
-                              })
-                              .replace(',', '')}{' '}
-                            • {tx.category?.name || 'No Category'}
+                            {formatTransactionDate(tx.transactedAt)} •{' '}
+                            {tx.category?.name || 'No Category'}
                           </p>
                         </div>
                       </div>

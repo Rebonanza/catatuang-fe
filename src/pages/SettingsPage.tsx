@@ -7,12 +7,13 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export const SettingsPage = () => {
-  const { data: userResponse, isLoading } = useQuery({
+  const { data: user, isLoading } = useQuery({
     queryKey: ['me'],
-    queryFn: () => authService.getMe(),
+    queryFn: async () => {
+      const res = await authService.getMe();
+      return res.data;
+    },
   });
-
-  const user = userResponse;
 
   return (
     <DashboardLayout>

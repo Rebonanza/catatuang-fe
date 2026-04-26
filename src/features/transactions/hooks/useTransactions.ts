@@ -12,15 +12,20 @@ export const useTransactions = (filters?: {
 }) => {
   return useQuery({
     queryKey: ['transactions', filters],
-    queryFn: () => transactionsService.getAll(filters),
+    queryFn: async () => {
+      const res = await transactionsService.getAll(filters);
+      return res; // ApiPaginatedResponse already has { data, meta } as top level keys in my new type
+    },
   });
 };
 
 export const useCreateTransaction = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: CreateTransactionDto) =>
-      transactionsService.create(data),
+    mutationFn: async (data: CreateTransactionDto) => {
+      const res = await transactionsService.create(data);
+      return res.data;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
     },
@@ -50,13 +55,16 @@ export const useBulkDeleteTransactions = () => {
 export const useUpdateTransaction = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({
+    mutationFn: async ({
       id,
       data,
     }: {
       id: string;
       data: Partial<CreateTransactionDto>;
-    }) => transactionsService.update(id, data),
+    }) => {
+      const res = await transactionsService.update(id, data);
+      return res.data;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
     },

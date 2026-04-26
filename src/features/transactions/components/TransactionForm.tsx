@@ -18,7 +18,7 @@ import {
   useUpdateTransaction,
 } from '../hooks/useTransactions';
 import type { Transaction } from '../types/transaction.type';
-import type { Category } from '@/features/categories/services/categories.service';
+import type { Category } from '@/features/categories/types/category.type';
 import {
   Select,
   SelectContent,

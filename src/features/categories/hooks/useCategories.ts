@@ -1,20 +1,24 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-  categoriesService,
-  type CreateCategoryDto,
-} from '../services/categories.service';
+import { categoriesService } from '../services/categories.service';
+import type { CreateCategoryDto } from '../types/category.type';
 
 export const useCategories = (params?: { page?: number; limit?: number }) => {
   return useQuery({
     queryKey: ['categories', params],
-    queryFn: () => categoriesService.getAll(params),
+    queryFn: async () => {
+      const res = await categoriesService.getAll(params);
+      return res;
+    },
   });
 };
 
 export const useCreateCategory = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: CreateCategoryDto) => categoriesService.create(data),
+    mutationFn: async (data: CreateCategoryDto) => {
+      const res = await categoriesService.create(data);
+      return res.data;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['categories'] });
     },
@@ -24,13 +28,16 @@ export const useCreateCategory = () => {
 export const useUpdateCategory = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({
+    mutationFn: async ({
       id,
       data,
     }: {
       id: string;
       data: Partial<CreateCategoryDto>;
-    }) => categoriesService.update(id, data),
+    }) => {
+      const res = await categoriesService.update(id, data);
+      return res.data;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['categories'] });
     },

@@ -12,12 +12,9 @@ export interface ChangePasswordDto {
 }
 
 export interface AuthResponse {
-  success: boolean;
-  data: {
-    accessToken: string;
-    refreshToken: string;
-    user?: User;
-  };
+  accessToken: string;
+  refreshToken: string;
+  user?: User;
 }
 
 export interface LoginDto {

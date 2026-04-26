@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Card } from '@/components/ui/card';
-import type { Category } from '../services/categories.service';
+import type { Category } from '../types/category.type';
 
 interface CategoryFormProps {
   initialData?: Category;

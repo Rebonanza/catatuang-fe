@@ -15,7 +15,7 @@ import {
   useDeleteCategory,
 } from '@/features/categories/hooks/useCategories';
 import { AppPagination } from '@/components/ui/AppPagination';
-import type { Category } from '@/features/categories/services/categories.service';
+import type { Category } from '@/features/categories/types/category.type';
 import { cn } from '@/lib/utils';
 import { CategoryForm } from '@/features/categories/components/CategoryForm';
 import { TransactionType } from '@/features/transactions/types/transaction.type';

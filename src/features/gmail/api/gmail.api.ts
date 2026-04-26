@@ -1,4 +1,5 @@
 import { apiClient } from '@/config/axios.config';
+import type { ApiResponse } from '@/types/api.type';
 
 export interface GmailStatus {
   success: boolean;
@@ -7,31 +8,39 @@ export interface GmailStatus {
   lastSyncedAt?: string;
 }
 
-export const getGmailStatus = async (): Promise<GmailStatus> => {
-  const response = await apiClient.get<GmailStatus>('/gmail/status');
+export const getGmailStatus = async (): Promise<ApiResponse<GmailStatus>> => {
+  const response =
+    await apiClient.get<ApiResponse<GmailStatus>>('/gmail/status');
   return response.data;
 };
 
-export const startGmailWatch = async () => {
-  const response = await apiClient.post<unknown>('/gmail/connect');
+export const startGmailWatch = async (): Promise<ApiResponse> => {
+  const response = await apiClient.post<ApiResponse>('/gmail/connect');
   return response.data;
 };
 
-export const stopGmailWatch = async () => {
-  const response = await apiClient.delete<unknown>('/gmail/disconnect');
+export const stopGmailWatch = async (): Promise<ApiResponse> => {
+  const response = await apiClient.delete<ApiResponse>('/gmail/disconnect');
   return response.data;
 };
 
-export const deleteGmailAccount = async () => {
-  const response = await apiClient.delete<unknown>('/gmail/account');
+export const deleteGmailAccount = async (): Promise<ApiResponse> => {
+  const response = await apiClient.delete<ApiResponse>('/gmail/account');
   return response.data;
 };
 
-export const syncGmailManual = async () => {
-  const response = await apiClient.post<{
+export const syncGmailManual = async (): Promise<
+  ApiResponse<{
     success: boolean;
     message: string;
-  }>('/gmail/sync');
+  }>
+> => {
+  const response = await apiClient.post<
+    ApiResponse<{
+      success: boolean;
+      message: string;
+    }>
+  >('/gmail/sync');
   return response.data;
 };
 

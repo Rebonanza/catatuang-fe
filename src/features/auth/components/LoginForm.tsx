@@ -6,6 +6,8 @@ import { useAuthStore } from '@/stores/auth.store';
 import { authService } from '@/features/auth/services/auth.service';
 import { RouteConstant } from '@/constants/routes.constant';
 import { useState } from 'react';
+import { AxiosError } from 'axios';
+import type { ApiErrorResponse } from '@/types/api.type';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -48,9 +50,9 @@ export const LoginForm = () => {
       }
     } catch (err: unknown) {
       const errorMsg =
-        err instanceof Error
-          ? (err as { response?: { data?: { message?: string } } }).response
-              ?.data?.message || err.message
+        err instanceof AxiosError
+          ? (err as AxiosError<ApiErrorResponse>).response?.data?.error
+              ?.message || err.message
           : 'Login failed';
       setError(errorMsg);
     } finally {

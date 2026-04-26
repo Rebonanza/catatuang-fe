@@ -1,6 +1,11 @@
-import axios from 'axios';
+import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios';
 import { useAuthStore } from '../stores/auth.store';
 import { RouteConstant } from '../constants/routes.constant';
+import type { ApiErrorResponse } from '../types/api.type';
+
+interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
 
 export const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL || '/api/v1',
@@ -19,39 +24,32 @@ apiClient.interceptors.request.use((config) => {
 // Response interceptor — handle standardized envelope & error refresh
 apiClient.interceptors.response.use(
   (response) => {
-    // If the response follows our standardized envelope { success, data, meta }
     if (
       response.data &&
       typeof response.data === 'object' &&
       'success' in response.data
     ) {
-      const { success, data, meta } = response.data;
-
-      if (success) {
-        // If meta and data are present at the top level, re-wrap for existing service patterns
-        if (meta !== undefined && Array.isArray(data)) {
-          return {
-            ...response,
-            data: { data, meta },
-          };
-        }
-        // Otherwise, just return the data directly
-        return {
-          ...response,
-          data,
-        };
-      }
+      return response;
     }
     return response;
   },
-  async (error) => {
-    const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry) {
+  async (error: AxiosError<ApiErrorResponse>) => {
+    const originalRequest = error.config as CustomAxiosRequestConfig;
+
+    if (
+      error.response?.status === 401 &&
+      originalRequest &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
       try {
         const { refreshAccessToken } = useAuthStore.getState();
         const newAccessToken = await refreshAccessToken();
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+        if (originalRequest.headers) {
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        }
+
         return apiClient(originalRequest);
       } catch {
         useAuthStore.getState().logout();

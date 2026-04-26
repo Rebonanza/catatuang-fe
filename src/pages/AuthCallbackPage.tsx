@@ -21,8 +21,8 @@ export const AuthCallbackPage = () => {
       authService
         .getMe()
         .then((res) => {
-          if (res) {
-            setUser(res);
+          if (res.success && res.data) {
+            setUser(res.data);
             navigate(RouteConstant.DASHBOARD, { replace: true });
           } else {
             navigate(RouteConstant.LOGIN, { replace: true });

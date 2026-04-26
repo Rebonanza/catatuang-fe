@@ -24,7 +24,10 @@ export const GmailConnectionCard: React.FC = () => {
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery({
     queryKey: ['gmailStatus'],
-    queryFn: getGmailStatus,
+    queryFn: async () => {
+      const res = await getGmailStatus();
+      return res.data;
+    },
   });
 
   const startMutation = useMutation({
@@ -46,8 +49,8 @@ export const GmailConnectionCard: React.FC = () => {
     onSuccess: (res) => {
       queryClient.invalidateQueries({ queryKey: ['gmailStatus'] });
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
-      if (res.success) {
-        alert(res.message);
+      if (res.success && res.data.message) {
+        alert(res.data.message);
       }
     },
   });
