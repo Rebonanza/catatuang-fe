@@ -9,6 +9,9 @@ import { CategoriesPage } from './pages/CategoriesPage';
 import { TransactionsPage } from './pages/TransactionsPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { AuthCallbackPage } from './pages/AuthCallbackPage';
+import { LandingPage } from './pages/LandingPage';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
+import { TermsOfServicePage } from './pages/TermsOfServicePage';
 
 const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const { accessToken } = useAuthStore();
@@ -81,7 +84,17 @@ function App() {
 
   return (
     <Routes>
-      {/* Public Routes */}
+      {/* Public Routes (no auth required, no redirect if logged in) */}
+      <Route
+        path={RouteConstant.PRIVACY_POLICY}
+        element={<PrivacyPolicyPage />}
+      />
+      <Route
+        path={RouteConstant.TERMS_OF_SERVICE}
+        element={<TermsOfServicePage />}
+      />
+
+      {/* Auth Routes */}
       <Route
         path={RouteConstant.LOGIN}
         element={
@@ -103,15 +116,19 @@ function App() {
         element={<AuthCallbackPage />}
       />
 
-      {/* Protected Routes */}
+      {/* Landing / Home */}
       <Route
         path={RouteConstant.HOME}
         element={
-          <ProtectedRoute>
+          accessToken ? (
             <Navigate to={RouteConstant.DASHBOARD} replace />
-          </ProtectedRoute>
+          ) : (
+            <LandingPage />
+          )
         }
       />
+
+      {/* Protected Routes */}
       <Route
         path={RouteConstant.DASHBOARD}
         element={
