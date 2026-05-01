@@ -1,68 +1,119 @@
 import { Link } from 'react-router-dom';
 import { RouteConstant } from '@/constants/routes.constant';
+import { useState, useRef, useEffect } from 'react';
 import {
   Mail,
   ShieldCheck,
   BarChart3,
   Sparkles,
   ArrowRight,
-  Wallet,
   Tag,
   TrendingUp,
+  Globe,
+  ChevronDown,
+  Check,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  LANGUAGE_OPTIONS,
+  DEFAULT_LANGUAGE,
+} from '@/constants/language.constant';
+import type { Language } from '@/constants/language.constant';
+import { getTranslation } from '@/locales';
 
-const FEATURES = [
+const FEATURE_STYLES = [
   {
     icon: Mail,
-    title: 'Gmail Auto-Sync',
-    description:
-      'Automatically parse transaction emails from your bank and e-wallet.',
     iconBg: 'bg-blue-500/10 text-blue-500',
     gradient: 'from-blue-500 to-cyan-400',
   },
   {
     icon: BarChart3,
-    title: 'Visual Analytics',
-    description: 'Interactive charts and breakdowns of your spending patterns.',
     iconBg: 'bg-emerald-500/10 text-emerald-500',
     gradient: 'from-emerald-500 to-teal-400',
   },
   {
     icon: Tag,
-    title: 'Smart Categories',
-    description: 'Auto-categorize transactions to match your financial habits.',
     iconBg: 'bg-violet-500/10 text-violet-500',
     gradient: 'from-violet-500 to-purple-400',
   },
   {
     icon: ShieldCheck,
-    title: 'Secure & Private',
-    description: 'Your data is encrypted with bank-grade AES-256 encryption.',
     iconBg: 'bg-amber-500/10 text-amber-500',
     gradient: 'from-amber-500 to-orange-400',
   },
 ] as const;
 
-const STEPS = [
-  {
-    step: '01',
-    title: 'Create Account',
-    description: 'Sign up with email or Google.',
-  },
-  {
-    step: '02',
-    title: 'Connect Gmail',
-    description: 'Link Gmail to auto-detect bank emails.',
-  },
-  {
-    step: '03',
-    title: 'Track & Analyze',
-    description: 'Watch finances organize themselves.',
-  },
-] as const;
+const LanguageDropdown = ({
+  value,
+  onChange,
+}: {
+  value: Language;
+  onChange: (lang: Language) => void;
+}) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const selected = LANGUAGE_OPTIONS.find((opt) => opt.code === value);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen((prev) => !prev)}
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        <Globe className="w-3.5 h-3.5" />
+        <span>{selected?.flag}</span>
+        <span className="hidden sm:inline">{selected?.label}</span>
+        <ChevronDown
+          className={`w-3 h-3 transition-transform ${open ? 'rotate-180' : ''}`}
+        />
+      </button>
+
+      {open && (
+        <div className="absolute right-0 top-full mt-2 w-48 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-lg py-1 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+          {LANGUAGE_OPTIONS.map((opt) => (
+            <button
+              key={opt.code}
+              type="button"
+              onClick={() => {
+                onChange(opt.code);
+                setOpen(false);
+              }}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
+                opt.code === value
+                  ? 'text-primary bg-primary/5 font-semibold'
+                  : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }`}
+            >
+              <span className="text-base">{opt.flag}</span>
+              <span className="flex-1 text-left">{opt.label}</span>
+              {opt.code === value && <Check className="w-4 h-4 text-primary" />}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 export const LandingPage = () => {
+  const [lang, setLang] = useState<Language>(DEFAULT_LANGUAGE);
+  const t = getTranslation(lang);
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 font-sans overflow-x-hidden">
       {/* Navbar */}
@@ -81,18 +132,19 @@ export const LandingPage = () => {
               CatatUang
             </span>
           </Link>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <LanguageDropdown value={lang} onChange={setLang} />
             <Link to={RouteConstant.LOGIN}>
               <Button
                 variant="ghost"
                 className="text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
               >
-                Login
+                {t.nav.login}
               </Button>
             </Link>
             <Link to={RouteConstant.REGISTER}>
               <Button className="h-9 px-5 bg-primary text-white font-black uppercase tracking-widest text-[10px] rounded-lg shadow-md shadow-primary/20">
-                Get Started
+                {t.nav.getStarted}
               </Button>
             </Link>
           </div>
@@ -110,23 +162,22 @@ export const LandingPage = () => {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8">
               <Sparkles className="w-3.5 h-3.5 text-primary" />
               <span className="text-[10px] font-black uppercase tracking-widest text-primary">
-                Smart Financial Tracking
+                {t.hero.badge}
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.1]">
-              Track Your Money{' '}
+              {t.hero.titlePre}
               <span className="bg-gradient-to-r from-primary to-emerald-400 bg-clip-text text-transparent">
-                Effortlessly
+                {t.hero.titleHighlight}
               </span>
             </h1>
             <p className="mt-6 text-base sm:text-lg text-slate-500 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
-              Automatically sync transactions from your Gmail, categorize
-              spending, and gain full visibility into your financial health.
+              {t.hero.subtitle}
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link to={RouteConstant.REGISTER}>
                 <Button className="h-12 px-8 bg-primary text-white font-black uppercase tracking-widest text-xs rounded-xl shadow-xl shadow-primary/25 group">
-                  Start Free{' '}
+                  {t.hero.ctaPrimary}{' '}
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </Button>
               </Link>
@@ -135,29 +186,29 @@ export const LandingPage = () => {
                   variant="outline"
                   className="h-12 px-8 border-slate-200 dark:border-slate-800 font-bold uppercase tracking-wider text-xs rounded-xl"
                 >
-                  I already have an account
+                  {t.hero.ctaSecondary}
                 </Button>
               </Link>
             </div>
             <div className="mt-14 flex items-center justify-center gap-6 text-slate-400 flex-wrap">
               <div className="flex items-center gap-2">
-                <Wallet className="w-4 h-4" />
+                <Sparkles className="w-4 h-4" />
                 <span className="text-[10px] font-bold uppercase tracking-wider">
-                  Free Forever
+                  {t.badges.first}
                 </span>
               </div>
               <div className="w-1 h-1 rounded-full bg-slate-300" />
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4" />
                 <span className="text-[10px] font-bold uppercase tracking-wider">
-                  Bank-Grade Security
+                  {t.badges.second}
                 </span>
               </div>
               <div className="w-1 h-1 rounded-full bg-slate-300 hidden sm:block" />
               <div className="hidden sm:flex items-center gap-2">
                 <TrendingUp className="w-4 h-4" />
                 <span className="text-[10px] font-bold uppercase tracking-wider">
-                  Real-time Sync
+                  {t.badges.third}
                 </span>
               </div>
             </div>
@@ -170,38 +221,42 @@ export const LandingPage = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
             <p className="text-[10px] font-black uppercase tracking-[0.25em] text-primary mb-3">
-              Features
+              {t.features.label}
             </p>
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white">
-              Everything You Need
+              {t.features.title}
             </h2>
             <p className="mt-4 text-sm text-slate-500 max-w-md mx-auto">
-              Powerful features to make personal finance tracking simple and
-              automated.
+              {t.features.subtitle}
             </p>
           </div>
           <div className="grid sm:grid-cols-2 gap-6">
-            {FEATURES.map((f) => (
-              <div
-                key={f.title}
-                className="group relative p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5"
-              >
+            {t.features.items.map((feature, index) => {
+              const style = FEATURE_STYLES[index];
+              if (!style) return null;
+              const IconComponent = style.icon;
+              return (
                 <div
-                  className={`w-12 h-12 rounded-xl ${f.iconBg} flex items-center justify-center mb-5`}
+                  key={feature.title}
+                  className="group relative p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5"
                 >
-                  <f.icon className="w-6 h-6" />
+                  <div
+                    className={`w-12 h-12 rounded-xl ${style.iconBg} flex items-center justify-center mb-5`}
+                  >
+                    <IconComponent className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                    {feature.description}
+                  </p>
+                  <div
+                    className={`absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r ${style.gradient} rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity`}
+                  />
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                  {f.title}
-                </h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-                  {f.description}
-                </p>
-                <div
-                  className={`absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r ${f.gradient} rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity`}
-                />
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -211,28 +266,28 @@ export const LandingPage = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-16">
             <p className="text-[10px] font-black uppercase tracking-[0.25em] text-primary mb-3">
-              How It Works
+              {t.steps.label}
             </p>
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900 dark:text-white">
-              Get Started in Minutes
+              {t.steps.title}
             </h2>
           </div>
           <div className="grid sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {STEPS.map((s, i) => (
-              <div key={s.step} className="relative text-center group">
-                {i < STEPS.length - 1 && (
+            {t.steps.items.map((step, i) => (
+              <div key={i} className="relative text-center group">
+                {i < t.steps.items.length - 1 && (
                   <div className="hidden sm:block absolute top-8 left-[calc(50%+32px)] w-[calc(100%-64px)] h-px bg-gradient-to-r from-primary/30 to-primary/10" />
                 )}
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 mb-6 group-hover:scale-105 transition-transform">
                   <span className="text-lg font-black text-primary">
-                    {s.step}
+                    {String(i + 1).padStart(2, '0')}
                   </span>
                 </div>
                 <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">
-                  {s.title}
+                  {step.title}
                 </h3>
                 <p className="text-sm text-slate-500 dark:text-slate-400">
-                  {s.description}
+                  {step.description}
                 </p>
               </div>
             ))}
@@ -247,18 +302,17 @@ export const LandingPage = () => {
         </div>
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white leading-tight">
-            Ready to Take Control of{' '}
+            {t.cta.title}
             <span className="bg-gradient-to-r from-primary to-emerald-400 bg-clip-text text-transparent">
-              Your Finances?
+              {t.cta.titleHighlight}
             </span>
           </h2>
           <p className="mt-5 text-slate-400 text-base max-w-md mx-auto">
-            Join users who trust CatatUang to manage their personal finances
-            smarter.
+            {t.cta.subtitle}
           </p>
           <Link to={RouteConstant.REGISTER}>
             <Button className="mt-10 h-12 px-10 bg-primary text-white font-black uppercase tracking-widest text-xs rounded-xl shadow-xl shadow-primary/30 group">
-              Create Free Account{' '}
+              {t.cta.button}{' '}
               <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </Button>
           </Link>
@@ -284,17 +338,17 @@ export const LandingPage = () => {
                 to={RouteConstant.PRIVACY_POLICY}
                 className="text-xs font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
               >
-                Privacy Policy
+                {t.footer.privacy}
               </Link>
               <Link
                 to={RouteConstant.TERMS_OF_SERVICE}
                 className="text-xs font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
               >
-                Terms of Service
+                {t.footer.terms}
               </Link>
             </div>
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-              © {new Date().getFullYear()} CatatUang. All rights reserved.
+              © {new Date().getFullYear()} {t.footer.copyright}
             </p>
           </div>
         </div>

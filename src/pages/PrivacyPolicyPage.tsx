@@ -245,7 +245,9 @@ export const PrivacyPolicyPage = () => {
             <ul>
               <li>
                 Email:{' '}
-                <a href="mailto:support@catatuang.com">support@catatuang.com</a>
+                <a href="mailto:giventheokhemides@gmail.com">
+                  giventheokhemides@gmail.com
+                </a>
               </li>
             </ul>
           </Section>

@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "login": "Masuk",
+    "getStarted": "Mulai"
+  },
+  "hero": {
+    "badge": "Asisten Keuangan Pribadimu",
+    "titlePre": "Uangmu Tercatat, ",
+    "titleHighlight": "Hidupmu Teratur",
+    "subtitle": "Tidak perlu input manual. Setiap transaksi dari bank dan e-wallet langsung tercatat otomatis dari email kamu.",
+    "ctaPrimary": "Coba Gratis Sekarang",
+    "ctaSecondary": "Saya sudah punya akun"
+  },
+  "badges": {
+    "first": "Gratis Selama Beta",
+    "second": "Data Terenkripsi",
+    "third": "Real-time"
+  },
+  "features": {
+    "label": "Fitur Unggulan",
+    "title": "Kelola Uang Tanpa Repot",
+    "subtitle": "Dari pencatatan sampai analisis — semua berjalan otomatis tanpa kamu harus angkat jari.",
+    "items": [
+      {
+        "title": "Transaksi Masuk Otomatis",
+        "description": "Setiap notifikasi transaksi dari bank atau e-wallet di Gmail langsung diubah jadi catatan keuangan. Tidak perlu ketik satu per satu."
+      },
+      {
+        "title": "Tahu ke Mana Uangmu Pergi",
+        "description": "Lihat ringkasan pengeluaranmu lewat grafik interaktif. Langsung tahu mana yang boros, mana yang hemat."
+      },
+      {
+        "title": "Kategori yang Paham Kebiasaanmu",
+        "description": "Transaksi otomatis dikelompokkan ke kategori yang relevan. Kamu juga bisa sesuaikan sendiri sesuai kebutuhan."
+      },
+      {
+        "title": "Privasimu Terjaga",
+        "description": "Data kamu dienkripsi dan hanya kamu yang bisa mengaksesnya. Kami tidak pernah menjual atau membagikan data ke siapapun."
+      }
+    ]
+  },
+  "steps": {
+    "label": "Cara Kerja",
+    "title": "3 Langkah, Langsung Jalan",
+    "items": [
+      {
+        "title": "Daftar Akun",
+        "description": "Cukup pakai email atau akun Google. Tidak sampai semenit."
+      },
+      {
+        "title": "Hubungkan Gmail",
+        "description": "Izinkan CatatUang membaca email transaksi. Hanya itu, tidak yang lain."
+      },
+      {
+        "title": "Duduk & Pantau",
+        "description": "Pengeluaranmu tercatat dan teranalisis otomatis. Tinggal lihat hasilnya."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Mulai Kendalikan ",
+    "titleHighlight": "Keuanganmu Hari Ini",
+    "subtitle": "CatatUang sedang dalam tahap beta — semua fitur bisa kamu coba gratis selagi kami terus menyempurnakan.",
+    "button": "Mulai Sekarang"
+  },
+  "footer": {
+    "privacy": "Kebijakan Privasi",
+    "terms": "Syarat & Ketentuan",
+    "copyright": "CatatUang. Hak cipta dilindungi."
+  }
+}

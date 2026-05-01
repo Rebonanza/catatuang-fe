@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "login": "Login",
+    "getStarted": "Get Started"
+  },
+  "hero": {
+    "badge": "Your Personal Finance Assistant",
+    "titlePre": "Money Tracked, ",
+    "titleHighlight": "Life Sorted",
+    "subtitle": "No more manual input. Every transaction from your bank and e-wallet is recorded automatically from your email.",
+    "ctaPrimary": "Try Free Now",
+    "ctaSecondary": "I already have an account"
+  },
+  "badges": {
+    "first": "Free During Beta",
+    "second": "Encrypted Data",
+    "third": "Real-time"
+  },
+  "features": {
+    "label": "Key Features",
+    "title": "Manage Money Without the Hassle",
+    "subtitle": "From recording to analysis — everything runs on autopilot so you don't have to lift a finger.",
+    "items": [
+      {
+        "title": "Transactions Logged Automatically",
+        "description": "Every bank and e-wallet notification in your Gmail becomes a financial record instantly. No typing, no spreadsheets."
+      },
+      {
+        "title": "Know Where Your Money Goes",
+        "description": "See your spending breakdown through interactive charts. Instantly spot what's draining your wallet and what's not."
+      },
+      {
+        "title": "Categories That Get You",
+        "description": "Transactions are auto-grouped into relevant categories. You can also customize them to match your own lifestyle."
+      },
+      {
+        "title": "Your Privacy, Protected",
+        "description": "Your data is encrypted and only accessible by you. We never sell or share your information with anyone."
+      }
+    ]
+  },
+  "steps": {
+    "label": "How It Works",
+    "title": "3 Steps, You're Set",
+    "items": [
+      {
+        "title": "Create Account",
+        "description": "Sign up with email or Google. Takes less than a minute."
+      },
+      {
+        "title": "Connect Gmail",
+        "description": "Allow CatatUang to read transaction emails. That's it — nothing else."
+      },
+      {
+        "title": "Sit Back & Monitor",
+        "description": "Your expenses are tracked and analyzed automatically. Just check the results."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Start Taking Control of ",
+    "titleHighlight": "Your Finances Today",
+    "subtitle": "CatatUang is in beta — try every feature for free while we keep improving.",
+    "button": "Get Started Now"
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "copyright": "CatatUang. All rights reserved."
+  }
+}
